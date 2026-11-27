@@ -21,8 +21,8 @@ pub struct Config {
     #[garde(length(min = 2))]
     pub lang: String,
 
-    #[garde(length(min = 4))]
-    pub storage: String,
+    #[garde(skip)]
+    pub storage: Storage,
 }
 
 #[derive(Debug, Default, Clone, Validate, Deserialize)]
@@ -65,4 +65,25 @@ pub struct Relation {
 
     #[garde(length(min = 2))]
     pub foreign_key: String,
+}
+
+#[derive(Debug, Default, Clone, Validate, Deserialize)]
+pub struct Storage {
+    #[garde(length(min = 4))]
+    pub engine: String,
+
+    #[garde(length(min = 1))]
+    pub login: String,
+
+    #[garde(length(min = 1))]
+    pub password: String,
+
+    #[garde(length(min = 1))]
+    pub host: String,
+
+    #[garde(length(min = 1))]
+    pub db_name: String,
+
+    #[garde(length(min = 3))]
+    pub charset: String,
 }

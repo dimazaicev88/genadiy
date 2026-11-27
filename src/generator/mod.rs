@@ -1,2 +1,4 @@
 pub mod generator;
-mod php;
+pub mod php;
+pub mod go;
+pub mod templates;
