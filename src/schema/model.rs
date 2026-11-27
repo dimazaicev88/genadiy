@@ -13,7 +13,7 @@ pub struct Schema {
     pub entities: Vec<Entities>,
 
     #[garde(skip)]
-    pub relations: Vec<Relation>,
+    pub relations: Option<Vec<Relation>>,
 }
 
 #[derive(Debug, Default, Clone, Validate, Deserialize)]

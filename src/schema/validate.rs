@@ -1,50 +1,42 @@
-use crate::schema::model::{Config, Schema};
+use crate::schema::model::Schema;
+use garde::Validate;
+
+const SUPPORTED_LANGUAGES: [&str; 2] = ["php", "go"];
 
 pub struct Validator;
 
 impl Validator {
     pub(crate) fn new() -> Self {
-        Self {}
+        Self
     }
 
     pub fn validate(&self, schema: &Schema) -> Result<(), String> {
         if schema.version < 1 {
-            return Err(String::from("schema version is large 0"));
+            return Err(String::from("schema version must be greater than 0"));
         }
 
-        if schema.config.lang.is_empty() {
-            return Err(String::from("empty lang"));
+        if !SUPPORTED_LANGUAGES.contains(&schema.config.lang.as_str()) {
+            return Err(format!("unknown lang: {}", schema.config.lang));
         }
 
-        if ["php", "go"].contains(&schema.config.lang.as_str()) {
-            return Err(String::from("unknown lang"));
-        }
+        schema
+            .validate()
+            .map_err(|error| format!("schema: {error}"))?;
 
-        if schema.entities.is_empty() {
-            return Err(String::from("empty entities"));
-        }
+        schema
+            .config
+            .validate()
+            .map_err(|error| format!("config: {error}"))?;
 
-        for entity in &schema.entities {
-            if entity.name.is_empty() {
-                return Err(String::from("empty name"));
-            }
+        for (entity_index, entity) in schema.entities.iter().enumerate() {
+            entity
+                .validate()
+                .map_err(|error| format!("entities[{entity_index}]: {error}"))?;
 
-            if entity.table.is_empty() {
-                return Err(String::from("empty name"));
-            }
-
-            if entity.fields.is_empty() {
-                return Err(String::from("empty name"));
-            }
-
-            for field in &entity.fields {
-                if field.name.is_empty() {
-                    return Err(String::from("empty name"));
-                }
-
-                if field.lang_type.is_empty() {
-                    return Err(String::from("lang_type name"));
-                }
+            for (field_index, field) in entity.fields.iter().enumerate() {
+                field.validate().map_err(|error| {
+                    format!("entities[{entity_index}].fields[{field_index}]: {error}")
+                })?;
             }
         }
 

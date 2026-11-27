@@ -11,9 +11,9 @@ impl Parser {
     }
 
     pub fn parse(&self) -> Result<Schema, String> {
-        let config: Schema = serde_saphyr::from_str(self.source.as_str()).expect("failed to parse");
-        Validator::new().validate(&config)?;
+        let schema: Schema = serde_saphyr::from_str(self.source.as_str()).expect("failed to parse");
+        Validator::new().validate(&schema)?;
 
-        Ok(config)
+        Ok(schema)
     }
 }

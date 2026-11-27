@@ -1,7 +1,7 @@
 version: 1 # Версия схемы. Поле обязательное
 config:
   lang: "go"       # Язык для которого будет сгенерирован ORM. Может быть php, go, rust. Поле обязательное
-  backend: "mysql" # Может быть MySQL, ClickHouse. Поле обязательное
+  storage: "mysql" # Может быть MySQL, ClickHouse. Поле обязательное
 entities:
   - name: "User"  # Название сущности. Поле обязательное
     table: "user" # Название таблицы в бд. Поле обязательное
