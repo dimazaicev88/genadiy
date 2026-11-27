@@ -1,5 +1,5 @@
 mod validate;
-mod parser;
+pub(crate)mod parser;
 mod model;
-mod definition;
 mod errors;
+mod tt;

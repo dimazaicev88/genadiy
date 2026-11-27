@@ -1,31 +1,68 @@
+use garde::Validate;
+use serde::Deserialize;
+
+#[derive(Debug, Default, Clone, Validate, Deserialize)]
 pub struct Schema {
-    version: i32,
-    config: Config,
-    entities: Vec<Entities>,
-    relations: Vec<Relation>,
+    #[garde(skip)]
+    pub version: i32,
+
+    #[garde(skip)]
+    pub config: Config,
+
+    #[garde(length(min = 1))]
+    pub entities: Vec<Entities>,
+
+    #[garde(skip)]
+    pub relations: Vec<Relation>,
 }
 
+#[derive(Debug, Default, Clone, Validate, Deserialize)]
 pub struct Config {
-    lang: String,
-    storage: String,
+    #[garde(length(min = 2))]
+    pub lang: String,
+
+    #[garde(length(min = 4))]
+    pub storage: String,
 }
 
+#[derive(Debug, Default, Clone, Validate, Deserialize)]
 pub struct Entities {
-    name: String,
-    table: String,
-    fields: Vec<Field>,
+    #[garde(length(min = 2))]
+    pub name: String,
+
+    #[garde(length(min = 2))]
+    pub table: String,
+
+    #[garde(length(min = 1))]
+    pub fields: Vec<Field>,
 }
 
+#[derive(Debug, Default, Clone, Validate, Deserialize)]
 pub struct Field {
-    name: String,
-    lang_type: String,
-    required: Option<bool>,
+    #[garde(length(min = 2))]
+    pub name: String,
+
+    #[garde(length(min = 2))]
+    pub lang_type: String,
+
+    #[garde(skip)]
+    pub required: Option<bool>,
 }
 
+#[derive(Debug, Default, Clone, Validate, Deserialize)]
 pub struct Relation {
-    name: String,
-    kind: String,
-    source: String,
-    target: String,
-    foreign_key: String,
+    #[garde(length(min = 2))]
+    pub name: String,
+
+    #[garde(length(min = 2))]
+    pub kind: String,
+
+    #[garde(length(min = 2))]
+    pub source: String,
+
+    #[garde(length(min = 2))]
+    pub target: String,
+
+    #[garde(length(min = 2))]
+    pub foreign_key: String,
 }

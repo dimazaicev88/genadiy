@@ -19,6 +19,7 @@ impl fmt::Display for Diagnostic {
     }
 }
 
+#[derive(Default)]
 pub struct Diagnostics {
     items: Vec<Diagnostic>,
 }
