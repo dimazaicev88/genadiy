@@ -1,0 +1,5 @@
+struct Delete;
+
+impl Delete{
+
+}

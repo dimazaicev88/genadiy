@@ -2,9 +2,9 @@ use upon::Error;
 use crate::generator::templates::TEMPLATE_DB_CONNECT;
 use crate::schema::model::Storage;
 
-pub struct DbGenerator;
+pub struct DB;
 
-impl DbGenerator {
+impl DB {
     pub fn new() -> Self {
         Self {}
     }
